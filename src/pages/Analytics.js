@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import TopBar from '../components/layout/TopBar';
-import { getBooks, getDashboardStats } from '../api';
+import { getBooks } from '../api';
 import { TrendingUp, DollarSign, Zap, FileText, RefreshCw, Loader2, AlertCircle } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell, PieChart, Pie, Legend } from 'recharts';
@@ -19,7 +19,7 @@ export default function Analytics() {
   const load = async () => {
     setLoading(true);
     try {
-      const [booksRes] = await Promise.allSettled([getBooks()]);
+      const [booksRes, statsRes] = await Promise.allSettled([getBooks(), getDashboardStats()]);
       if (booksRes.status === 'fulfilled') setBooks(booksRes.value.data?.books || booksRes.value.data || []);
     } catch { toast.error('Failed to load analytics'); }
     finally { setLoading(false); }
@@ -29,7 +29,6 @@ export default function Analytics() {
 
   const totalChapters  = books.reduce((s,b) => s + (b.completedChapters || 0), 0);
   const totalBooks     = books.length;
-
   const estInputTokens  = totalChapters * AVG_TOKENS_PER_CHAPTER;
   const estOutputTokens = totalChapters * AVG_TOKENS_OUTPUT;
   const estCost         = ((estInputTokens / 1000) * GPT4_COST_PER_1K_INPUT) + ((estOutputTokens / 1000) * GPT4_COST_PER_1K_OUTPUT);

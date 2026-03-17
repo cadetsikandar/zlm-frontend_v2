@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import TopBar from '../components/layout/TopBar';
-import { getDashboardStats, getBooks } from '../api';
+import { getBooks } from '../api';
 import {
   BookOpen,
   FileText,
@@ -62,8 +62,8 @@ export default function Dashboard() {
   const navigate = useNavigate();
   const [books, setBooks]     = useState([]);
   const [loading, setLoading] = useState(true);
-  const [activityFeed]        = useState(MOCK_ACTIVITY);
-  const [editorFlags]         = useState(MOCK_FLAGS);
+  const activityFeed = MOCK_ACTIVITY;
+  const editorFlags  = MOCK_FLAGS;
   const activityRef           = useRef(null);
 
   const load = async () => {
