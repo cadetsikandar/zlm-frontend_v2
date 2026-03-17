@@ -1,0 +1,73 @@
+.qa-layout {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 20px;
+}
+.qa-list {}
+.qa-report-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  transition: background var(--transition);
+}
+.qa-report-row:hover { background: var(--paper-warm); }
+.qa-report-row.selected { background: var(--teal-pale); }
+.qa-score-badge {
+  width: 44px; height: 44px;
+  border-radius: var(--radius-md);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 0.85rem;
+  font-family: var(--font-mono);
+  flex-shrink: 0;
+}
+.qa-score-badge.pass { background: var(--sage-pale); color: var(--sage); }
+.qa-score-badge.fail { background: var(--rose-pale); color: var(--rose); }
+.qa-report-info { flex: 1; }
+.qa-report-chapter { font-size: 0.85rem; font-weight: 500; color: var(--ink-soft); }
+.qa-report-book { font-size: 0.72rem; color: var(--ink-muted); margin-top: 2px; }
+.qa-empty-note {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 20px;
+  font-size: 0.78rem;
+  color: var(--ink-muted);
+  background: var(--gold-pale);
+}
+.qa-detail {}
+.qa-detail-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+.qa-score-large {
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 1;
+}
+.qa-score-large.pass { color: var(--sage); }
+.qa-score-large.fail { color: var(--rose); }
+.qa-viol-grid { display: flex; flex-direction: column; gap: 8px; }
+.qa-viol-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background: var(--paper-warm);
+  border-radius: var(--radius-sm);
+  font-size: 0.82rem;
+}
+.qa-viol-count {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 2px 10px;
+  border-radius: 99px;
+}
+.qa-viol-count.zero { background: var(--sage-pale); color: var(--sage); }
+.qa-viol-count.nonzero { background: var(--rose-pale); color: var(--rose); }

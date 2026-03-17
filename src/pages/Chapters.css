@@ -1,0 +1,36 @@
+.chapters-filters { display: flex; gap: 8px; flex-wrap: wrap; }
+.chapters-filter-btn {
+  padding: 6px 14px;
+  border-radius: 99px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--ink-muted);
+  border: 1px solid var(--border-strong);
+  background: var(--paper-card);
+  transition: all var(--transition);
+  cursor: pointer;
+}
+.chapters-filter-btn:hover { color: var(--ink); }
+.chapters-filter-btn.active { background: var(--ink); color: #fff; border-color: var(--ink); }
+.chapters-note {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: var(--teal-pale);
+  border-radius: var(--radius-md);
+  font-size: 0.82rem;
+  color: var(--teal);
+}
+.chapter-num-sm {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px; height: 24px;
+  border-radius: 4px;
+  background: var(--paper-warm);
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--ink-muted);
+  font-family: var(--font-mono);
+}

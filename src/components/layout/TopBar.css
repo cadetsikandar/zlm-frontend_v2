@@ -1,0 +1,52 @@
+.topbar {
+  height: var(--header-height);
+  padding: 20px 40px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--paper-card);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.topbar-left {}
+.topbar-title {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.2;
+}
+.topbar-sub {
+  font-size: 0.78rem;
+  color: var(--ink-muted);
+  margin-top: 1px;
+}
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.topbar-bell {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink-muted);
+  transition: all var(--transition);
+  cursor: pointer;
+}
+.topbar-bell:hover { background: var(--paper-warm); color: var(--ink); }
+.topbar-bell-dot {
+  position: absolute;
+  top: 7px; right: 7px;
+  width: 7px; height: 7px;
+  background: var(--rose);
+  border-radius: 50%;
+  border: 2px solid var(--paper-card);
+}
