@@ -3,6 +3,32 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { useAuthStore } from './store/authStore';
 
+import Sidebar from './components/layout/Sidebar';
+
+// Auth
+import Login    from './pages/Login';
+import Register from './pages/Register';
+
+// Core
+import Dashboard    from './pages/Dashboard';
+import Books        from './pages/Books';
+import BookDetail   from './pages/BookDetail';
+import BookSetup    from './pages/BookSetup';
+import NewBook      from './pages/NewBook';
+import Chapters     from './pages/Chapters';
+import QAReports    from './pages/QAReports';
+
+// Bundle & Tracking
+import BundleTracker from './pages/BundleTracker';
+import CountryExams  from './pages/CountryExams';
+import EvidenceAlerts from './pages/EvidenceAlerts';
+
+// Admin
+import Prompts      from './pages/Prompts';
+import Users        from './pages/Users';
+import Analytics    from './pages/Analytics';
+import DesignStudio from './pages/DesignStudio';
+
 class ErrorBoundary extends React.Component {
   constructor(props) {
     super(props);
@@ -30,33 +56,6 @@ class ErrorBoundary extends React.Component {
     return this.props.children;
   }
 }
-
-
-import Sidebar from './components/layout/Sidebar';
-
-// Auth
-import Login    from './pages/Login';
-import Register from './pages/Register';
-
-// Core
-import Dashboard    from './pages/Dashboard';
-import Books        from './pages/Books';
-import BookDetail   from './pages/BookDetail';
-import BookSetup    from './pages/BookSetup';
-import NewBook      from './pages/NewBook';
-import Chapters     from './pages/Chapters';
-import QAReports    from './pages/QAReports';
-
-// Bundle & Tracking
-import BundleTracker from './pages/BundleTracker';
-import CountryExams  from './pages/CountryExams';
-import EvidenceAlerts from './pages/EvidenceAlerts';
-
-// Admin
-import Prompts      from './pages/Prompts';
-import Users        from './pages/Users';
-import Analytics    from './pages/Analytics';
-import DesignStudio from './pages/DesignStudio';
 
 function ProtectedLayout({ children }) {
   const { isAuthenticated } = useAuthStore();
