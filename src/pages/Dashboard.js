@@ -120,14 +120,18 @@ export default function Dashboard() {
       />
 
       <div className="page-content stagger">
-        {/* ROW 1 — KPI Stats (Bible §9.2 Row 1) */}
-        <div className="stat-grid mb-6">
-          <StatCard accent="blue"   Icon={BookOpen}    color="var(--cobalt)"  label="Total Books"    value={books.length}       sub="7 tracks × 4 books"/>
-          <StatCard accent="green"  Icon={FileText}    color="var(--sage)"    label="Chapters Done"  value={totalChapters}      sub="all books"/>
-          <StatCard accent="violet" Icon={Activity}    color="var(--violet)"  label="Active Jobs"    value={activeBooks}        sub="generating now"/>
-          <StatCard accent="teal"   Icon={CheckCircle2}color="var(--teal)"    label="QA Passed"      value={qaPassedBooks}      sub="ready for design"/>
-          <StatCard accent="amber"  Icon={Zap}         color="var(--amber)"   label="Published"      value={publishedBooks}     sub="live on KDP"/>
-          <StatCard accent="rose"   Icon={DollarSign}  color="var(--rose)"    label="Est. Spend"     value={`$${estCost}`}      sub="GPT-4 Turbo"/>
+        {/* ROW 1 — KPI Cards: Total Books | Published | Chapters Generated | Overall Progress % (Bible §9.2 Row 1) */}
+        <div className="stat-grid mb-4" style={{gridTemplateColumns:'repeat(4, 1fr)'}}>
+          <StatCard accent="blue"   Icon={BookOpen}    color="var(--cobalt)"  label="Total Books"          value={books.length}  sub="7 tracks × 4 books"/>
+          <StatCard accent="amber"  Icon={Zap}         color="var(--amber)"   label="Published"            value={publishedBooks} sub="live on KDP"/>
+          <StatCard accent="green"  Icon={FileText}    color="var(--sage)"    label="Chapters Generated"   value={totalChapters}  sub="all books combined"/>
+          <StatCard accent="violet" Icon={CheckCircle2}color="var(--violet)"  label="Overall Progress"     value={books.length ? `${Math.round((books.filter(b=>['QA_PASSED','DESIGN_READY','KDP_READY','PUBLISHED'].includes(b.status)).length/books.length)*100)}%` : '0%'} sub="books QA-passed or better"/>
+        </div>
+        {/* Secondary stats row */}
+        <div className="stat-grid mb-6" style={{gridTemplateColumns:'repeat(3, 1fr)'}}>
+          <StatCard accent="teal"   Icon={Activity}    color="var(--teal)"    label="Active Jobs"          value={activeBooks}    sub="generating now"/>
+          <StatCard accent="rose"   Icon={DollarSign}  color="var(--rose)"    label="Est. Spend"           value={`$${estCost}`}  sub="GPT-4 Turbo pricing"/>
+          <StatCard accent="green"  Icon={CheckCircle2}color="var(--sage)"    label="QA Passed Books"      value={qaPassedBooks}  sub="ready for design"/>
         </div>
 
         {/* ROW 2 — Live Activity Feed (Bible §9.2 Row 2) */}

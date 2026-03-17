@@ -61,24 +61,7 @@
   --shadow-sage:   0 4px 16px rgba(52,201,122,0.2);
 
   /* Sidebar */
-  --sidebar-w: 300px;
-
-  /* Layout */
-  --header-height: 80px;
-
-  /* Paper/Card */
-  --paper-card: var(--surface);
-  --paper-warm: var(--surface-2);
-
-  /* Ink */
-  --ink: var(--ink-900);
-  --ink-muted: var(--ink-500);
-
-  /* Transitions */
-  --transition: 0.15s ease;
-
-  /* Additional */
-  --navy: #0A1628;
+  --sidebar-w: 228px;
 }
 
 /* ── Reset ────────────────────────────────────────────────────── */

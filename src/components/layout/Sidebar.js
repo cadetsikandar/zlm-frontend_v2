@@ -4,7 +4,7 @@ import { useAuthStore } from '../../store/authStore';
 import {
   LayoutDashboard, BookOpen, PlusCircle, Settings2, FileText,
   ShieldCheck, MessageSquare, Users, LogOut, Zap, Globe,
-  Package, Bell, TrendingUp, ChevronRight, Palette
+  Package, Bell, TrendingUp, ChevronRight, Palette, Activity
 } from 'lucide-react';
 import api from '../../api';
 
@@ -23,14 +23,15 @@ const NAV_SECTIONS = [
   },
   {
     label: 'Admin',
-    adminOnly: false,
+    adminOnly: true,
     items: [
-      { to:'/prompts',        icon:MessageSquare,   label:'Prompts'        },
-      { to:'/country-exams',  icon:Globe,           label:'Country & Exams'},
-      { to:'/evidence-alerts',icon:Bell,            label:'Evidence Alerts', alertKey: true },
-      { to:'/analytics',      icon:TrendingUp,      label:'Analytics'      },
-      { to:'/design',         icon:Palette,         label:'Design Studio'  },
-      { to:'/users',          icon:Users,           label:'Users',         adminOnly: true },
+      { to:'/prompts',        icon:MessageSquare,   label:'Prompts',        adminOnly: true },
+      { to:'/country-exams',  icon:Globe,           label:'Country & Exams',adminOnly: true },
+      { to:'/evidence-alerts',icon:Bell,            label:'Evidence Alerts',adminOnly: true },
+      { to:'/analytics',      icon:TrendingUp,      label:'Analytics',      adminOnly: true },
+      { to:'/design',         icon:Palette,         label:'Design Studio',  adminOnly: true },
+      { to:'/system-status',  icon:Activity,        label:'System Status',  adminOnly: true },
+      { to:'/users',          icon:Users,           label:'Users',          adminOnly: true },
     ]
   }
 ];
@@ -54,7 +55,7 @@ export default function Sidebar() {
 
   useEffect(() => {
     api.get('/health').then(r => setHealth(r.data)).catch(() => setHealth(null));
-  }, []);
+  }, []); // eslint-disable-line
 
   const handleLogout = () => { logout(); navigate('/login'); };
 
@@ -82,14 +83,14 @@ export default function Sidebar() {
                 {section.label}
               </div>
               {visibleItems.map(item => {
-                const Icon = item.icon;
+                const NavIcon = item.icon;
                 return (
                   <NavLink
                     key={item.to}
                     to={item.to}
                     className={({ isActive }) => `nav-item${isActive ? ' active' : ''}`}
                   >
-                    <Icon size={14} strokeWidth={1.8}/>
+                    <NavIcon size={14} strokeWidth={1.8}/>
                     <span style={{ flex:1 }}>{item.label}</span>
                     <ChevronRight size={10} style={{ opacity:0.3 }}/>
                   </NavLink>

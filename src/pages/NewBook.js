@@ -136,9 +136,10 @@ export default function NewBook() {
   const [saving, setSaving]       = useState(false);
   const [bookDetails, setBookDetails] = useState({ title:'', subtitle:'', trackNumber: 1 });
   const [search, setSearch]       = useState('');
+  const [overrideExam, setOverrideExam] = useState(null); // from /api/match-exam
 
-  const examKey = provider && country ? `${provider.value}-${country.value}` : null;
-  const examInfo = examKey ? EXAM_MAP[examKey] : null;
+  const examKey  = provider && country ? `${provider.value}-${country.value}` : null;
+  const examInfo = overrideExam || (examKey ? EXAM_MAP[examKey] : null);
 
   const allProviders = PROVIDERS.flatMap(g => g.items);
   const filteredProviders = search
@@ -284,7 +285,17 @@ export default function NewBook() {
                   const eKey = `${provider?.value}-${c.value}`;
                   const hasMapping = !!EXAM_MAP[eKey];
                   return (
-                    <button key={c.value} onClick={() => { if(hasMapping){ setCountry(c); setStep(2); } else toast.error(`No exam mapping yet for ${provider?.label} in ${c.label}`); }}
+                    <button key={c.value} onClick={async () => {
+                        if (!hasMapping) { toast.error(`No exam mapping yet for ${provider?.label} in ${c.label}`); return; }
+                        setCountry(c);
+                        // Try backend /api/match-exam (Phase 3 feature), fall back to local EXAM_MAP
+                        try {
+                          const apiModule = await import('../api');
+                          const res = await apiModule.default.post('/api/match-exam', { providerType: provider.value, country: c.value });
+                          if (res.data?.exam) setOverrideExam({ exam: res.data.exam, body: res.data.body || '', notes: res.data.notes || '' });
+                        } catch { /* Phase 3 backend not ready — local EXAM_MAP used */ }
+                        setStep(2);
+                      }}
                       style={{
                         padding:'14px 16px', textAlign:'left',
                         background: country?.value===c.value ? 'rgba(52,201,122,0.08)' : hasMapping ? 'var(--surface-2)' : 'var(--surface)',

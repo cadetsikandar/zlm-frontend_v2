@@ -14,12 +14,12 @@ const ROLE_META = {
 };
 
 const PERMISSIONS = {
-  ADMIN:           { generate:true,  qa:true,  prompts:true,  templates:true,  dashboard:true, users:true  },
-  CONTENT_MANAGER: { generate:true,  qa:false, prompts:false, templates:false, dashboard:true, users:false },
-  QA_REVIEWER:     { generate:false, qa:true,  prompts:false, templates:false, dashboard:true, users:false },
-  DESIGNER:        { generate:false, qa:false, prompts:false, templates:true,  dashboard:true, users:false },
+  ADMIN:           { generate:true,  qa:true,  prompts:true,  templates:true,  dashboard:true, analytics:true,  users:true  },
+  CONTENT_MANAGER: { generate:true,  qa:false, prompts:false, templates:false, dashboard:true, analytics:false, users:false },
+  QA_REVIEWER:     { generate:false, qa:true,  prompts:false, templates:false, dashboard:true, analytics:false, users:false },
+  DESIGNER:        { generate:false, qa:false, prompts:false, templates:true,  dashboard:true, analytics:false, users:false },
 };
-const PERM_KEYS = ['generate','qa','prompts','templates','dashboard','users'];
+const PERM_KEYS = ['generate','qa','prompts','templates','dashboard','analytics','users'];
 
 export default function Users() {
   const { user: me } = useAuthStore();

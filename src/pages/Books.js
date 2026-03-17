@@ -33,6 +33,8 @@ export default function Books() {
   const [filterTrack, setFilterTrack] = useState('ALL');
   const [filterStatus, setFilterStatus] = useState('ALL');
   const [search, setSearch]           = useState('');
+  const [filterCountry, setFilterCountry] = useState('ALL');
+  const [filterBundle, setFilterBundle]   = useState('ALL');
 
   const load = async () => {
     setLoading(true);
@@ -48,6 +50,8 @@ export default function Books() {
   const filtered = books.filter(b => {
     if (filterTrack!=='ALL' && b.certificationTrack!==filterTrack) return false;
     if (filterStatus!=='ALL' && b.status!==filterStatus) return false;
+    if (filterCountry!=='ALL' && b.country && b.country!==filterCountry) return false;
+    if (filterBundle!=='ALL' && b.bundleType && b.bundleType!==filterBundle) return false;
     if (search && !b.title.toLowerCase().includes(search.toLowerCase())) return false;
     return true;
   });
@@ -72,17 +76,25 @@ export default function Books() {
       <div className="page-content">
         {/* Filters */}
         <div style={{display:'flex',gap:10,marginBottom:18,flexWrap:'wrap'}}>
-          <input className="input" placeholder="Search books…" value={search} onChange={e=>setSearch(e.target.value)} style={{maxWidth:220}}/>
-          <select className="input select" value={filterTrack} onChange={e=>setFilterTrack(e.target.value)} style={{maxWidth:180}}>
+          <input className="input" placeholder="Search books…" value={search} onChange={e=>setSearch(e.target.value)} style={{maxWidth:200}}/>
+          <select className="input select" value={filterTrack} onChange={e=>setFilterTrack(e.target.value)} style={{maxWidth:160}}>
             <option value="ALL">All Tracks</option>
             {Object.keys(TRACK_META).map(t=><option key={t} value={t}>{t}</option>)}
           </select>
-          <select className="input select" value={filterStatus} onChange={e=>setFilterStatus(e.target.value)} style={{maxWidth:180}}>
+          <select className="input select" value={filterStatus} onChange={e=>setFilterStatus(e.target.value)} style={{maxWidth:160}}>
             <option value="ALL">All Statuses</option>
             {Object.entries(STATUS_CFG).map(([k,v])=><option key={k} value={k}>{v.label}</option>)}
           </select>
-          {(filterTrack!=='ALL'||filterStatus!=='ALL'||search) && (
-            <button className="btn btn-ghost btn-sm" onClick={()=>{setFilterTrack('ALL');setFilterStatus('ALL');setSearch('');}}>Clear</button>
+          <select className="input select" value={filterCountry} onChange={e=>setFilterCountry(e.target.value)} style={{maxWidth:140}}>
+            <option value="ALL">All Countries</option>
+            {['USA','Canada','UK','Haiti','UAE','Saudi Arabia','Egypt','Jordan'].map(c=><option key={c} value={c}>{c}</option>)}
+          </select>
+          <select className="input select" value={filterBundle} onChange={e=>setFilterBundle(e.target.value)} style={{maxWidth:150}}>
+            <option value="ALL">All Types</option>
+            {['TEXTBOOK','REVIEW','MNEMONIC','PICTURE','STUDYSHEET','QBANK'].map(b=><option key={b} value={b}>{b}</option>)}
+          </select>
+          {(filterTrack!=='ALL'||filterStatus!=='ALL'||filterCountry!=='ALL'||filterBundle!=='ALL'||search) && (
+            <button className="btn btn-ghost btn-sm" onClick={()=>{setFilterTrack('ALL');setFilterStatus('ALL');setFilterCountry('ALL');setFilterBundle('ALL');setSearch('');}}>Clear</button>
           )}
         </div>
 

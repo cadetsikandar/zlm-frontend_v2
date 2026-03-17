@@ -32,7 +32,7 @@ export default function BookSetup() {
     try { const { data } = await getBooks(); setBooks(data?.books||data||[]); }
     catch { toast.error('Failed to load books'); }
     finally { setLoading(false); }
-  }, []);
+  }, []); // eslint-disable-line
 
   useEffect(() => { load(); }, [load]);
 

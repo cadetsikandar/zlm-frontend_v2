@@ -184,6 +184,69 @@ export default function BookDetail() {
           </div>
         </div>
 
+
+        {/* Editor Flag Panel - auto checklist issues (Exec Plan Dashboard Fix) */}
+        {chapters.length > 0 && (() => {
+          const flags = [];
+          chapters.forEach(ch => {
+            if (['GENERATED','QA_PASSED','QA_FAILED'].includes(ch.status)) {
+              if (ch.wordCount && ch.wordCount < 4000)
+                flags.push({ chap:`Ch ${ch.chapterNumber}`, issue:`Only ${ch.wordCount.toLocaleString()} words — minimum 4,000 required`, sev:'WARNING' });
+              if (ch.qaScore != null && ch.qaScore < 70)
+                flags.push({ chap:`Ch ${ch.chapterNumber}`, issue:`QA score ${Math.round(ch.qaScore)}% — below 70% pass threshold`, sev:'CRITICAL' });
+              if (ch.status === 'QA_FAILED')
+                flags.push({ chap:`Ch ${ch.chapterNumber}`, issue:'QA failed — requires regeneration or manual fix', sev:'CRITICAL' });
+            }
+            if (ch.status === 'PENDING' && chapters.some(c => c.status !== 'PENDING'))
+              flags.push({ chap:`Ch ${ch.chapterNumber}`, issue:'Chapter not yet generated while others are complete', sev:'WARNING' });
+          });
+
+          if (flags.length === 0) return (
+            <div className="card animate-fade mb-4" style={{borderLeft:'3px solid var(--sage)'}}>
+              <div className="card-pad" style={{display:'flex',alignItems:'center',gap:10,paddingTop:14,paddingBottom:14}}>
+                <span style={{fontSize:'1rem'}}>✅</span>
+                <span style={{fontSize:'0.82rem',color:'var(--sage)',fontWeight:600}}>Editor Checklist — No issues detected in generated chapters</span>
+              </div>
+            </div>
+          );
+
+          const critCount = flags.filter(f=>f.sev==='CRITICAL').length;
+          const warnCount = flags.filter(f=>f.sev==='WARNING').length;
+          return (
+            <div className="card animate-fade mb-4" style={{borderLeft:'3px solid var(--rose)'}}>
+              <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',padding:'12px 18px 8px'}}>
+                <div>
+                  <h3 style={{fontSize:'0.88rem',marginBottom:1}}>
+                    🚩 Editor Checklist — Flag Panel
+                    {critCount > 0 && <span style={{marginLeft:8,padding:'2px 7px',background:'rgba(245,81,106,0.15)',color:'var(--rose)',borderRadius:'var(--r-pill)',fontSize:'0.62rem',fontWeight:700}}>{critCount} critical</span>}
+                    {warnCount > 0 && <span style={{marginLeft:6,padding:'2px 7px',background:'rgba(245,166,35,0.12)',color:'var(--amber)',borderRadius:'var(--r-pill)',fontSize:'0.62rem',fontWeight:700}}>{warnCount} warning</span>}
+                  </h3>
+                  <p className="text-xs text-muted">Auto-detected issues in generated chapters</p>
+                </div>
+              </div>
+              <div className="divider"/>
+              <div style={{padding:'6px 0'}}>
+                {flags.map((flag, i) => (
+                  <div key={i} style={{
+                    display:'flex', alignItems:'center', gap:12, padding:'7px 18px',
+                    borderBottom: i < flags.length-1 ? '1px solid var(--border)' : 'none',
+                    background: flag.sev==='CRITICAL' ? 'rgba(245,81,106,0.02)' : 'transparent',
+                  }}>
+                    <span style={{fontSize:'0.9rem'}}>{flag.sev==='CRITICAL'?'❌':'⚠️'}</span>
+                    <span style={{fontSize:'0.72rem',fontWeight:600,color:'var(--ink-500)',minWidth:60,flexShrink:0}}>{flag.chap}:</span>
+                    <span style={{fontSize:'0.78rem',color:flag.sev==='CRITICAL'?'var(--rose)':'var(--amber)',flex:1}}>{flag.issue}</span>
+                    <span style={{fontSize:'0.62rem',padding:'2px 7px',borderRadius:'var(--r-pill)',fontWeight:700,
+                      background:flag.sev==='CRITICAL'?'rgba(245,81,106,0.12)':'rgba(245,166,35,0.1)',
+                      color:flag.sev==='CRITICAL'?'var(--rose)':'var(--amber)',flexShrink:0}}>
+                      {flag.sev}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          );
+        })()}
+
         {/* Chapters */}
         <div className="card animate-fade">
           <div className="card-pad" style={{ paddingBottom:10 }}>
