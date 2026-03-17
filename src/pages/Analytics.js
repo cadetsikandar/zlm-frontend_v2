@@ -14,15 +14,13 @@ const TRACK_COLOR = { FNP:'#3B6FF5',AGPCNP:'#34C97A',PMHNP:'#9B6FFF',WHNP:'#F5A6
 
 export default function Analytics() {
   const [books, setBooks]     = useState([]);
-  const [stats, setStats]     = useState(null);
   const [loading, setLoading] = useState(true);
 
   const load = async () => {
     setLoading(true);
     try {
-      const [booksRes, statsRes] = await Promise.allSettled([getBooks(), getDashboardStats()]);
+      const [booksRes] = await Promise.allSettled([getBooks()]);
       if (booksRes.status === 'fulfilled') setBooks(booksRes.value.data?.books || booksRes.value.data || []);
-      if (statsRes.status === 'fulfilled') setStats(statsRes.value.data);
     } catch { toast.error('Failed to load analytics'); }
     finally { setLoading(false); }
   };
@@ -31,7 +29,6 @@ export default function Analytics() {
 
   const totalChapters  = books.reduce((s,b) => s + (b.completedChapters || 0), 0);
   const totalBooks     = books.length;
-  const publishedBooks = books.filter(b => b.status === 'PUBLISHED').length;
 
   const estInputTokens  = totalChapters * AVG_TOKENS_PER_CHAPTER;
   const estOutputTokens = totalChapters * AVG_TOKENS_OUTPUT;

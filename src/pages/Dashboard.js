@@ -60,7 +60,6 @@ const GPT4_COST_PER_CHAPTER = 0.92;
 
 export default function Dashboard() {
   const navigate = useNavigate();
-  const [stats, setStats]     = useState(null);
   const [books, setBooks]     = useState([]);
   const [loading, setLoading] = useState(true);
   const [activityFeed]        = useState(MOCK_ACTIVITY);
@@ -70,8 +69,7 @@ export default function Dashboard() {
   const load = async () => {
     setLoading(true);
     try {
-      const [statsRes, booksRes] = await Promise.allSettled([getDashboardStats(), getBooks()]);
-      if (statsRes.status === 'fulfilled') setStats(statsRes.value.data);
+      const [booksRes] = await Promise.allSettled([getBooks()]);
       if (booksRes.status === 'fulfilled') setBooks(booksRes.value.data?.books || booksRes.value.data || []);
     } catch { toast.error('Failed to load dashboard'); }
     finally { setLoading(false); }
