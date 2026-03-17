@@ -19,7 +19,7 @@ export default function Analytics() {
   const load = async () => {
     setLoading(true);
     try {
-      const [booksRes, statsRes] = await Promise.allSettled([getBooks(), getDashboardStats()]);
+      const [booksRes] = await Promise.allSettled([getBooks()]);
       if (booksRes.status === 'fulfilled') setBooks(booksRes.value.data?.books || booksRes.value.data || []);
     } catch { toast.error('Failed to load analytics'); }
     finally { setLoading(false); }
