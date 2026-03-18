@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import TopBar from '../components/layout/TopBar';
-import { getAllQAReports } from '../api';
+import { getChapters } from '../api';
 import {
   ShieldCheck,
   Loader2,
